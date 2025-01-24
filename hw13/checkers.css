@@ -1,0 +1,59 @@
+.checkers {
+  text-align: center;
+}
+
+.checkers-group {
+  display: flex;
+  gap: 15px;
+  position: relative;
+  justify-content: center;
+  max-width: 200px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 20px 0;
+}
+
+.checker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+
+.checker span {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 120px;
+  bottom: -10px;
+  font-size: 12px;
+  background-color: #fff;
+  color: #333;
+}
+
+.checker.active span {
+  display: block;
+}
+
+.checker.theme-pink {
+  background-color: crimson;
+}
+
+.checker.theme-gold {
+  background-color: gold;
+}
+
+.checker.theme-dark {
+  background-color: #333;
+}
+
+.theme-pink .theme-pink.active, 
+.theme-gold .theme-gold.active, 
+.theme-dark .theme-dark.active {
+  border-color: transparent;
+  outline-color: #fff;;
+} 

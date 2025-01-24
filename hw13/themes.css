@@ -1,0 +1,17 @@
+.theme-pink {
+  --c-bg: crimson;
+  --c-text: #fff;
+  --c-title: gold;
+}
+
+.theme-gold {
+  --c-bg: gold;
+  --c-text: #333;
+  --c-title: crimson;
+}
+
+.theme-dark {
+  --c-bg: #333;
+  --c-text: gold;
+  --c-title: #fff;
+}

@@ -1,0 +1,91 @@
+.stylers {
+  max-width: 400px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.stylers-group {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.styler {
+  width: 75px;
+  height: 75px;
+  border-radius: 10px;
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.styler.active {
+  outline-color: #fff;
+}
+
+.styler span {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 120px;
+  bottom: -25px;
+  font-size: 12px;
+  background-color: #fff;
+  color: #333;
+}
+
+.styler.active span {
+  display: block;
+}
+
+.styler-80 {
+  background-image: url('./images/80х.webp');
+}
+
+.styler-90 {
+  background-image: url('./images/90х.webp');
+}
+
+.styler-00 {
+  background-image: url('./images/00х.webp');
+}
+
+body[class*="styler"] {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+body.styler-80 {
+  background-image: url('./images/80х.webp');
+}
+
+body.styler-90 {
+  background-image: url('./images/90х.webp');
+}
+
+body.styler-00 {
+  background-image: url('./images/00х.webp');
+}
+
+body[class*="styler"] .wrapper {
+  background-color: var(--c-bg);
+}
+
+body[class*="styler"].theme-gold .wrapper {
+  --c-bg: #ffd700D9;
+}
+
+body[class*="styler"].theme-pink .wrapper {
+  --c-bg: #dc143cD9;
+}
+
+body[class*="styler"].theme-dark .wrapper {
+  --c-bg: #333333D9;
+}

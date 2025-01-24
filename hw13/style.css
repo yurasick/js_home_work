@@ -1,0 +1,117 @@
+:root {
+  box-sizing: border-box;
+
+  --c-text: #333;
+  --c-bg: #fff;
+  --c-title: #454545;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  margin: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  outline: 0;
+  font: inherit;
+}
+
+h1 {
+  color: var(--c-title);
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+.wrapper {
+  max-width: 900px;
+  padding: 30px;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 760px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+body:not(.super) {
+  position: relative;
+}
+
+body:not(.super)::after {
+  content: '😾 \A Не видаляй усі класи!';
+  white-space: pre-wrap;
+  font-size: 100px;
+  font-weight: 600;
+  color: crimson;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 9999;
+  background-color: #fff;
+}
+
+.content {
+  margin-bottom: 30px;
+}
+
+.total-count {
+  border-top: 1px solid var(--c-text);
+  text-align: right;
+  padding: 20px 0;
+}
+
+.stats-group {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--c-text);
+}
+
+.stats-item {
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: var(--c-text);
+  color: var(--c-bg);
+  line-height: 1;
+  vertical-align: middle;
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 10px;
+  opacity: 0.5;
+}
+
+.msg {
+  font-weight: 600;
+  max-width: 730px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px dashed var(--c-title);
+}
+
+.msg:not(:last-of-type) {
+  margin-bottom: 20px;
+}
