@@ -104,6 +104,8 @@ const colorsArray = [
   "#c708ff",
 ];
 
+let arrResult = [];
+
 const grid = document.createElement("div");
 grid.classList.add("grid");
 let wrapper = document.getElementsByClassName("wrapper")[0];
@@ -129,6 +131,9 @@ wrapper.insertAdjacentHTML(
 const divClick = document.createElement("div");
 divClick.className = "counter click-counter";
 divClick.textContent = "0";
+divClick.addEventListener("click", function () {
+  localStorageData();
+});
 
 const divScore = document.createElement("div");
 divScore.className = "counter score-counter";
@@ -172,12 +177,16 @@ function starGame() {
 
 wrapper.addEventListener("click", function (event) {
   event.stopPropagation();
-  mathScore(event);
+  if (event.target.classList.contains("cell")) {
+    mathScore(event);
+    mathResult();
+  }
 });
 
 btnStart.addEventListener("click", function (event) {
   event.stopPropagation();
   starGame();
+  showBtnResult();
 });
 
 btnReplay.addEventListener("click", function (event) {
@@ -202,12 +211,12 @@ function mathScore(event) {
     }
   }
   cell.style.backgroundColor = `${colorsArray[index]}`;
-  ++click;
-  divClick.textContent = click;
+  ++divClick.textContent;
   score += +cell.textContent;
   divScore.textContent = score;
   cell.style.pointerEvents = "none";
-  cell.style.cursor = "not-allowed";
+  divClick.textContent === "0" ? (score = 0) : null;
+  divClick.textContent === "0" ? (divScore.textContent = 0) : null;
   if (score == 1000) {
     grid.classList.add("win");
     const title = document.querySelector("title");
@@ -215,6 +224,7 @@ function mathScore(event) {
   }
   if (score > 1000) {
     grid.classList.add("lost");
+    const title = document.querySelector("title");
     title.textContent = "Невдача";
   }
 }
@@ -224,11 +234,127 @@ function mathScore(event) {
 function replayGame(event) {
   const title = document.querySelector("title");
   title.textContent = "Гра почалась";
-  divClick.textContent = 0;
-  divScore.textContent = 0;
+  divClick.textContent = "0";
+  divScore.textContent = "0";
   [...allCell].forEach((item) => {
     item.classList.remove("clicked");
     item.style.pointerEvents = "auto";
     item.style.backgroundColor = "rgba(255, 255, 255, 0.10)";
   });
+  grid.classList.contains("win") ? grid.classList.remove("win") : null;
+  grid.classList.contains("lost") ? grid.classList.remove("lost") : null;
+  score = 0;
+  return score;
 }
+
+// 1 функція отримання результатів
+function mathResult() {
+  let obj = {};
+  if (grid.classList.contains("win") || grid.classList.contains("lost")) {
+    obj["clicks"] = divClick.textContent;
+    obj["score"] = divScore.textContent;
+    arrResult.push(obj);
+  }
+  return arrResult;
+}
+
+// 3 створюємо кнопку з результатами
+const divTop = document.querySelector(".top");
+const btnResult = document.createElement("div");
+btnResult.className = "btn btn-result btn-purple";
+
+function showBtnResult() {
+  btnReplay.after(btnResult);
+}
+
+const elem = document.createElement("div");
+elem.classList.add("results");
+const resultHead = document.createElement("div");
+resultHead.classList.add("results-head");
+elem.append(resultHead);
+const divrs = document.createElement("div");
+divrs.textContent = "Результати";
+resultHead.prepend(divrs);
+const btnClose = document.createElement("button");
+btnClose.className = "btn btn-close btn-transparent";
+resultHead.append(btnClose);
+const resultsText = document.createElement("div");
+resultsText.textContent = "Немає результатів";
+elem.append(resultsText);
+const ulres = document.createElement("ul");
+ulres.classList.add("results-list");
+elem.append(ulres);
+const resultList = document.createElement("button");
+resultList.className = "results-clear btn-disabled";
+resultList.textContent = "Очистити результати";
+elem.append(resultList);
+
+function createRes() {
+  wrapper.prepend(elem);
+  if (arrResult.length > 0) {
+    resultsText.remove();
+  }
+}
+
+btnResult.addEventListener("click", function () {
+  createRes();
+  showListResult(arrResult);
+  saveToLocalStorage(arrResult);
+});
+
+btnClose.addEventListener("click", function () {
+  elem.remove();
+});
+
+const resultItem = document.createElement("li");
+resultItem.className = "results-item";
+
+function showListResult(arrResult, arr = "") {
+  arrResult.length === 0 ? ((arrResult = null), (arrResult = arr)) : null;
+  if (grid.classList.contains("win") || grid.classList.contains("lost")) {
+    ulres.innerHTML = "";
+    for (let i = 0; i < arrResult.length; i++) {
+      let ternOperator = "";
+      ternOperator = `${arrResult[i]["score"]}` > 1000 ? "Невдача" : "Виграш";
+      resultItem.innerHTML = `<span>Кліків: ${arrResult[i]["clicks"]}</span>
+      <span>Балів: ${arrResult[i]["score"]}</span>
+      <span>${ternOperator}</span>`;
+      ulres.prepend(resultItem.cloneNode(true));
+    }
+    resultList.classList.remove("btn-disabled");
+  }
+}
+
+// 4
+resultList.addEventListener("click", function () {
+  clearAllResults(arrResult);
+});
+
+function clearAllResults(arrResult) {
+  arrResult.length = 0;
+  ulres.innerHTML = "";
+  resultList.classList.add("btn-disabled");
+  resultHead.after(resultsText);
+}
+
+// 5 збереження інформації в localStorage
+
+function saveToLocalStorage(arrResult) {
+  if (
+    resultList.classList.contains("btn-disabled") ||
+    grid.classList.contains("win") ||
+    grid.classList.contains("lost")
+  ) {
+    localStorage.setItem("arr", JSON.stringify(arrResult));
+    console.log(JSON.parse(localStorage.getItem("arr")));
+  }
+}
+
+// функція повернення результатів після перезагрузки сторінки
+
+function localStorageData() {
+  let arr = JSON.parse(localStorage.getItem("arr"));
+  return arr;
+}
+
+// єдине тільки я не знаю к зробити в 5 пункті 4 підпункт
